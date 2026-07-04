@@ -459,29 +459,10 @@
         let customers = loadFromStorage('sz_customers', []);
         let currentCustomerEmail = loadFromStorage('sz_session', null);
 
-        // API functions (no localStorage for products - use server database)
-        async function saveProducts() {
-            // Products now saved via API when uploaded
-            // Don't need to save locally
-        }
+        function saveProducts() { saveToStorage('sz_products', products); }
         function saveOrders() { saveToStorage('sz_orders', orders); }
         function saveCustomers() { saveToStorage('sz_customers', customers); }
         function saveSession() { saveToStorage('sz_session', currentCustomerEmail); }
-        
-        // Load products from API on page load
-        async function loadProducts() {
-            try {
-                const res = await fetch('/api/products');
-                if (res.ok) {
-                    products = await res.json();
-                    renderStorefront();
-                    return true;
-                }
-            } catch (err) {
-                console.error('Error loading products:', err);
-            }
-            return false;
-        }
 
         function switchPortalTab(tab) {
             const isLogin = tab === 'login';
@@ -886,66 +867,32 @@
 
         async function handleProductCreation(e) {
             e.preventDefault();
-            const name = document.getElementById('prod-name').value;
-            const category = document.getElementById('prod-cat').value;
-            const price = document.getElementById('prod-price').value;
             const imgFile = document.getElementById('prod-img-file').files[0];
+            const videoFile = document.getElementById('prod-video-file').files[0];
+            const imgUrl = await readFileAsDataURL(imgFile);
+            const videoUrl = videoFile ? await readFileAsDataURL(videoFile) : null;
 
-            if (!name || !category || !price || !imgFile) {
-                alert('Please fill all fields!');
-                return;
-            }
-
-            // Create FormData to send image file
-            const formData = new FormData();
-            formData.append('name', name);
-            formData.append('category', category);
-            formData.append('price', price);
-            formData.append('image', imgFile);
-
-            try {
-                const res = await fetch('/api/products', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (res.ok) {
-                    alert('Product published successfully!');
-                    // Clear form
-                    document.getElementById('prod-name').value = '';
-                    document.getElementById('prod-price').value = '';
-                    document.getElementById('prod-img-file').value = '';
-                    document.getElementById('prod-video-file').value = '';
-                    
-                    // Reload products from API and refresh UI
-                    await loadProducts();
-                    renderAdminDashboard();
-                } else {
-                    alert('Error publishing product. Please try again.');
-                }
-            } catch (err) {
-                console.error('Error:', err);
-                alert('Network error. Check console.');
-            }
+            products.unshift({
+                id: Date.now(),
+                name: document.getElementById('prod-name').value,
+                category: document.getElementById('prod-cat').value,
+                price: parseFloat(document.getElementById('prod-price').value),
+                img: imgUrl,
+                video: videoUrl
+            });
+            alert("Product published successfully!");
+            document.getElementById('prod-name').value = '';
+            document.getElementById('prod-price').value = '';
+            document.getElementById('prod-img-file').value = '';
+            document.getElementById('prod-video-file').value = '';
+            saveProducts();
+            renderStorefront(); renderAdminDashboard();
         }
 
-        async function deleteProduct(id) { 
-            try {
-                const res = await fetch(`/api/products/${id}`, { method: 'DELETE' });
-                if (res.ok) {
-                    await loadProducts();
-                    renderAdminDashboard();
-                }
-            } catch (err) {
-                console.error('Error deleting product:', err);
-            }
-        }
+        function deleteProduct(id) { products = products.filter(p => p.id !== id); saveProducts(); renderStorefront(); renderAdminDashboard(); }
 
-        // Load products on page load
-        window.addEventListener('load', async () => {
-            await loadProducts();
-            renderCustomerPortal();
-        });
+        renderStorefront();
+        renderCustomerPortal();
     </script>
 </body>
 </html>
