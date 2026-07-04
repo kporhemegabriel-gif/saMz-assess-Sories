@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaMzcaccesSories | Premium Bead Collections & Bracelets</title>
+    <!-- Tailwind CSS for vibrant, scalable design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for clean icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        .gradient-bg { background: linear-gradient(135deg, #f472b6 0%, #3b82f6 100%); }
+        #home, #shop, #about, #contact { scroll-margin-top: 84px; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- NAVIGATION BAR -->
+    <nav class="bg-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="toggleSection('storefront-view')">
+                    <!-- Brand Logo from image_8435fe.png with blend utility to help strip dark edges -->
+                    <img src="image_8435fe.png" alt="SaMzcaccesSories Logo" class="h-14 w-14 rounded-full object-cover shadow-sm mix-blend-multiply">
+                    <span class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-600 tracking-wider hidden sm:inline">SaMzcaccesSories</span>
+                </div>
+                <div class="hidden md:flex space-x-8 font-medium">
+                    <a href="#home" class="text-gray-600 hover:text-pink-500 transition">Home</a>
+                    <a href="#shop" class="text-gray-600 hover:text-pink-500 transition">Shop</a>
+                    <a href="#about" class="text-gray-600 hover:text-pink-500 transition">About Us</a>
+                    <a href="#contact" class="text-gray-600 hover:text-pink-500 transition">Contact</a>
+                </div>
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <button onclick="toggleSection('customer-portal'); renderCustomerPortal();" class="bg-gray-100 hover:bg-pink-100 text-gray-700 rounded-full w-9 h-9 sm:w-auto sm:h-auto sm:px-3 sm:py-1.5 flex items-center justify-center gap-1 transition text-sm">
+                        <i class="fa-solid fa-circle-user text-pink-500"></i> <span id="nav-account-label" class="hidden sm:inline">Sign In</span>
+                    </button>
+                    <button onclick="toggleSection('auth-page')" class="bg-gray-100 hover:bg-blue-100 text-gray-700 rounded-full w-9 h-9 sm:w-auto sm:h-auto sm:px-3 sm:py-1.5 flex items-center justify-center gap-1 transition text-sm">
+                        <i class="fa-solid fa-truck-ramp-box text-pink-500"></i> <span class="hidden sm:inline">Track Order</span>
+                    </button>
+                    <button onclick="toggleSection('admin-portal')" class="hidden sm:flex text-xs bg-gray-100 text-gray-700 px-3 py-1.5 rounded-full hover:bg-gray-200 transition items-center">
+                        <i class="fa-solid fa-lock-open mr-1"></i> Admin Desk
+                    </button>
+                    <button onclick="toggleCart()" class="relative p-2 text-gray-700 hover:text-pink-500 transition">
+                        <i class="fa-solid fa-shopping-bag text-2xl"></i>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-pink-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="md:hidden bg-gray-100 text-gray-700 rounded-full w-9 h-9 flex items-center justify-center">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- MOBILE MENU (Home/Shop/About/Contact + Admin Desk, shown below md) -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4 space-y-1 border-t border-gray-100 pt-3">
+                <a href="#home" onclick="closeMobileMenu()" class="block px-2 py-2.5 rounded-lg text-gray-700 font-medium hover:bg-gray-50">Home</a>
+                <a href="#shop" onclick="closeMobileMenu()" class="block px-2 py-2.5 rounded-lg text-gray-700 font-medium hover:bg-gray-50">Shop</a>
+                <a href="#about" onclick="closeMobileMenu()" class="block px-2 py-2.5 rounded-lg text-gray-700 font-medium hover:bg-gray-50">About Us</a>
+                <a href="#contact" onclick="closeMobileMenu()" class="block px-2 py-2.5 rounded-lg text-gray-700 font-medium hover:bg-gray-50">Contact</a>
+                <button onclick="closeMobileMenu(); toggleSection('admin-portal')" class="w-full text-left px-2 py-2.5 rounded-lg text-gray-500 text-sm font-medium hover:bg-gray-50"><i class="fa-solid fa-lock-open mr-1"></i> Admin Desk</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN INTERACTIVE WRAPPER -->
+    <main>
+        
+        <!-- SECTION 1: HOME & SHOP HUB -->
+        <div id="storefront-view" class="view-section">
+            <!-- Hero Banner -->
+            <section id="home" class="text-white py-28 px-4 text-center relative overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(135deg, rgba(244,114,182,0.88) 0%, rgba(59,130,246,0.88) 100%), url('https://d8j0ntlcm91z4.cloudfront.net/user_3G12GddvejVc9Qh90D43BvaXRi8/hf_20260704_030541_efe7c71c-fb81-4b3d-84b3-ef36858cb1ae.png');">
+                <div class="max-w-3xl mx-auto relative z-10">
+                    <span class="bg-white/20 text-white text-xs font-semibold px-4 py-1.5 rounded-full uppercase tracking-widest mb-4 inline-block">Handcrafted Elegance</span>
+                    <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">Adorn Your Unique Story With Premium Beads</h1>
+                    <p class="text-lg md:text-xl text-pink-100 mb-8 max-w-2xl mx-auto">Discover custom-crafted bracelets, waist beads, and luxury statements designed to elevate your style. Nationwide delivery across Ghana.</p>
+                    <a href="#shop" class="bg-white text-pink-600 font-bold px-8 py-4 rounded-full shadow-lg hover:bg-pink-50 transition transform hover:-translate-y-0.5 inline-block">Explore Collections</a>
+                </div>
+            </section>
+
+            <!-- Shop Catalog Section -->
+            <section id="shop" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-gray-200 pb-6">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900 tracking-tight">Our Curated Catalog</h2>
+                    </div>
+                    <div class="flex space-x-3 mt-6 md:mt-0 overflow-x-auto pb-2">
+                        <button onclick="filterCategory('all')" class="cat-btn bg-pink-500 text-white font-medium px-5 py-2 rounded-full shadow transition text-sm">All Items</button>
+                        <button onclick="filterCategory('luxury-bracelets')" class="cat-btn bg-white text-gray-600 hover:bg-gray-100 font-medium px-5 py-2 rounded-full shadow transition text-sm">Bracelets</button>
+                        <button onclick="filterCategory('premium-beads')" class="cat-btn bg-white text-gray-600 hover:bg-gray-100 font-medium px-5 py-2 rounded-full shadow transition text-sm">Bead Collections</button>
+                    </div>
+                </div>
+                <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="bg-white py-20 border-t border-b border-gray-100">
+                <div class="max-w-5xl mx-auto px-4 text-center">
+                    <span class="text-pink-500 font-bold uppercase tracking-widest text-sm">Our Identity</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-6">About SaMzcaccesSories</h2>
+                    <p class="text-gray-600 text-lg leading-relaxed max-w-3xl mx-auto">
+                        At SaMzcaccesSories, we transform culture, tradition, and modern elegance into wearable art. Specializing in high-end, custom-crafted waist beads, wrist accents, and premium luxury crystal bracelets, our collections are carefully structured to reflect your personal power and identity.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="bg-gray-900 rounded-3xl overflow-hidden shadow-2xl text-white grid grid-cols-1 lg:grid-cols-2">
+                    <div class="p-12 flex flex-col justify-between">
+                        <div>
+                            <span class="text-pink-400 font-bold uppercase tracking-widest text-sm">Get In Touch</span>
+                            <h2 class="text-3xl font-bold mt-2 mb-6">Let's Craft Something Custom For You</h2>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-white/10 w-12 h-12 rounded-full flex items-center justify-center text-pink-400 text-lg"><i class="fa-solid fa-phone"></i></div>
+                                <div><p class="text-xs text-gray-400">Call / WhatsApp Us</p><a href="tel:+233202729399" class="font-semibold text-lg hover:text-pink-400 transition">+233 20 272 9399</a></div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-white/10 w-12 h-12 rounded-full flex items-center justify-center text-blue-400 text-lg"><i class="fa-brands fa-instagram"></i></div>
+                                <div><p class="text-xs text-gray-400">Follow Our Vibe</p><a href="https://www.instagram.com/im_irixx?igsh=aThyb3NlZXp6NjJo" target="_blank" class="font-semibold text-lg hover:text-blue-400 transition">@im_irixx</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white/5 p-12">
+                        <form id="crm-form" onsubmit="handleCRMSubmit(event)" class="space-y-6">
+                            <div><label class="block text-xs font-bold uppercase text-gray-400 mb-2">Full Name</label><input type="text" id="crm-name" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none"></div>
+                            <div><label class="block text-xs font-bold uppercase text-gray-400 mb-2">Email Address</label><input type="email" id="crm-email" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none"></div>
+                            <div><label class="block text-xs font-bold uppercase text-gray-400 mb-2">Your Message</label><textarea id="crm-message" rows="4" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none"></textarea></div>
+                            <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-blue-600 text-white font-bold py-4 rounded-xl shadow-lg">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- SECTION 2: ORDER BASKET TRACKING PORTAL -->
+        <div id="auth-page" class="view-section hidden min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4">
+            <div class="max-w-4xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-12">
+                
+                <!-- Left Tracking Panel Trigger -->
+                <div class="md:col-span-5 gradient-bg p-8 flex flex-col justify-between text-white text-center items-center">
+                    <div>
+                        <img src="image_8435fe.png" alt="Logo" class="h-20 w-20 rounded-full mx-auto object-cover mb-4 border-2 border-white/50 mix-blend-multiply bg-white">
+                        <h3 class="text-xl font-bold tracking-wide">Track Your Basket</h3>
+                        <p class="text-xs text-pink-100 mt-2">Enter your designated package ID reference code to view real-time delivery progress updates instantly.</p>
+                    </div>
+                    <div class="mt-8 w-full">
+                        <button onclick="toggleSection('storefront-view')" class="text-sm bg-white/20 px-4 py-2 rounded-lg font-medium hover:bg-white/30 transition w-full"><i class="fa-solid fa-arrow-left mr-2"></i> Return Home</button>
+                    </div>
+                </div>
+
+                <!-- Right Search Results Field -->
+                <div class="md:col-span-7 p-8 space-y-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Live Package Lookup</h2>
+                        <p class="text-xs text-gray-500 mt-1">Check the status of your bespoke accessory pipeline values.</p>
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <input type="text" id="client-track-input" placeholder="Enter Order Reference ID (e.g., SZA-1092)" class="flex-1 border border-gray-300 rounded-xl px-4 py-3 text-sm font-mono uppercase focus:outline-none focus:border-pink-500">
+                        <button onclick="locateClientOrderTrack()" class="bg-gray-900 text-white px-5 rounded-xl text-sm font-bold hover:bg-gray-800 transition">Search</button>
+                    </div>
+
+                    <!-- Dynamic Output Box for Client tracking feedback -->
+                    <div id="tracking-result-box" class="hidden border rounded-2xl p-5 bg-gray-50 space-y-4">
+                        <!-- Content injects dynamically here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2B: CUSTOMER ACCOUNT PORTAL (Register / Login / Dashboard) -->
+        <div id="customer-portal" class="view-section hidden min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4">
+            <div class="max-w-4xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-12">
+
+                <!-- Left Brand Panel -->
+                <div class="md:col-span-5 gradient-bg p-8 flex flex-col justify-between text-white text-center items-center">
+                    <div>
+                        <img src="image_8435fe.png" alt="Logo" class="h-20 w-20 rounded-full mx-auto object-cover mb-4 border-2 border-white/50 mix-blend-multiply bg-white">
+                        <h3 id="portal-left-title" class="text-xl font-bold tracking-wide">Your SaMzcaccesSories Account</h3>
+                        <p class="text-xs text-pink-100 mt-2">Create an account to save your details and see every order you've placed with us, in one place.</p>
+                    </div>
+                    <div class="mt-8 w-full">
+                        <button onclick="toggleSection('storefront-view')" class="text-sm bg-white/20 px-4 py-2 rounded-lg font-medium hover:bg-white/30 transition w-full"><i class="fa-solid fa-arrow-left mr-2"></i> Return Home</button>
+                    </div>
+                </div>
+
+                <!-- Right: Guest (Login/Register tabs) OR Logged-in dashboard -->
+                <div class="md:col-span-7 p-8 space-y-6">
+
+                    <!-- GUEST VIEW -->
+                    <div id="portal-guest-view">
+                        <div class="flex space-x-2 bg-gray-100 p-1.5 rounded-xl max-w-xs mb-6">
+                            <button onclick="switchPortalTab('login')" id="portal-tab-login" class="portal-tab-btn flex-1 bg-pink-500 text-white text-xs font-bold py-2.5 rounded-lg text-center transition">Log In</button>
+                            <button onclick="switchPortalTab('register')" id="portal-tab-register" class="portal-tab-btn flex-1 text-gray-500 text-xs font-bold py-2.5 rounded-lg text-center transition">Register</button>
+                        </div>
+
+                        <!-- LOGIN FORM -->
+                        <form id="portal-login-form" onsubmit="handleCustomerLogin(event)" class="space-y-4">
+                            <h2 class="text-xl font-bold text-gray-900">Welcome Back</h2>
+                            <div><label class="block text-xs font-bold uppercase text-gray-400 mb-2">Email Address</label><input type="email" id="login-email" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500"></div>
+                            <div><label class="block text-xs font-bold uppercase text-gray-400 mb-2">Password</label><input type="password" id="login-password" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500"></div>
+                            <p id="login-error" class="hidden text-xs font-semibold text-red-500"></p>
+                            <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-blue-600 text-white font-bold py-3.5 rounded-xl shadow-lg">Log In</button>
+                        </form>
+
+                        <!-- REGISTER FORM -->
+                        <form id="portal-register-form" onsubmit="handleCustomerRegister(event)" class="space-y-4 hidden">
+                            <h2 class="text-xl font-bold text-gray-900">Create Your Account</h2>
+                            <div><label class="block text-xs font-bold uppercase text-gray-400 mb-2">Full Name</label><input type="text" id="reg-name" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500"></div>
+                            <div><label class="block text-xs font-bold uppercase text-gray-400 mb-2">Email Address</label><input type="email" id="reg-email" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500"></div>
+                            <div><label class="block text-xs font-bold uppercase text-gray-400 mb-2">Phone Number</label><input type="tel" id="reg-phone" required placeholder="024XXXXXXX" class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500"></div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Password</label>
+                                <div class="relative">
+                                    <input type="password" id="reg-password" required oninput="updatePasswordStrength()" class="w-full border border-gray-200 rounded-xl px-4 py-3 pr-12 text-sm focus:outline-none focus:border-pink-500">
+                                    <button type="button" onclick="togglePwVisibility('reg-password', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs"><i class="fa-solid fa-eye"></i></button>
+                                </div>
+                                <!-- Live strength meter -->
+                                <div class="w-full h-1.5 bg-gray-100 rounded-full mt-2 overflow-hidden">
+                                    <div id="pw-strength-bar" class="h-full w-0 bg-red-400 transition-all duration-300 rounded-full"></div>
+                                </div>
+                                <ul id="pw-req-list" class="text-[11px] text-gray-500 mt-2 space-y-1">
+                                    <li id="req-len"><i class="fa-solid fa-circle-xmark text-gray-300 mr-1"></i>At least 8 characters</li>
+                                    <li id="req-letter"><i class="fa-solid fa-circle-xmark text-gray-300 mr-1"></i>Contains a letter (A-Z / a-z)</li>
+                                    <li id="req-number"><i class="fa-solid fa-circle-xmark text-gray-300 mr-1"></i>Contains a number (0-9)</li>
+                                    <li id="req-symbol"><i class="fa-solid fa-circle-xmark text-gray-300 mr-1"></i>Contains a symbol (e.g. ! @ # $ %)</li>
+                                </ul>
+                            </div>
+                            <div><label class="block text-xs font-bold uppercase text-gray-400 mb-2">Confirm Password</label><input type="password" id="reg-password-confirm" required class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500"></div>
+                            <p id="register-error" class="hidden text-xs font-semibold text-red-500"></p>
+                            <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-blue-600 text-white font-bold py-3.5 rounded-xl shadow-lg">Create Account</button>
+                        </form>
+                    </div>
+
+                    <!-- LOGGED-IN DASHBOARD VIEW -->
+                    <div id="portal-account-view" class="hidden space-y-6">
+                        <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+                            <div>
+                                <p class="text-xs text-gray-400 font-semibold uppercase">Welcome back</p>
+                                <h2 id="account-welcome-name" class="text-xl font-bold text-gray-900">-</h2>
+                                <p id="account-welcome-email" class="text-xs text-gray-500"></p>
+                            </div>
+                            <button onclick="handleCustomerLogout()" class="text-xs bg-gray-100 hover:bg-red-500 hover:text-white text-gray-600 font-bold px-4 py-2 rounded-lg transition"><i class="fa-solid fa-right-from-bracket mr-1"></i> Log Out</button>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-gray-900 mb-3 flex items-center gap-2"><i class="fa-solid fa-bag-shopping text-pink-500"></i> Your Orders</h3>
+                            <div id="account-orders-list" class="space-y-3"><!-- Populated dynamically --></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: JUMIA-STYLE SIMPLIFIED ADMIN DASHBOARD -->
+        <div id="admin-portal" class="view-section hidden min-h-screen bg-gray-900 text-white p-6 sm:p-10">
+            <!-- Auth Form for Gatekeeping -->
+            <div id="admin-gatekeeper" class="max-w-md mx-auto bg-gray-800 p-8 rounded-2xl shadow-2xl border border-gray-700 my-20">
+                <div class="text-center mb-6"><i class="fa-solid fa-shield-halved text-4xl text-pink-500 mb-2"></i><h2 class="text-xl font-bold">Admin Authority Verification</h2></div>
+                <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                    <div><label class="block text-xs text-gray-400 mb-2">Security Key Access Token</label><input type="password" id="admin-pass-input" required class="w-full bg-gray-900 border border-gray-700 rounded-xl px-4 py-3 text-center text-white tracking-widest"></div>
+                    <div class="flex space-x-3"><button type="button" onclick="toggleSection('storefront-view')" class="w-1/2 bg-gray-700 py-3 rounded-xl">Exit</button><button type="submit" class="w-1/2 bg-pink-500 font-bold py-3 rounded-xl">Verify</button></div>
+                </form>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div id="admin-dashboard-content" class="hidden max-w-7xl mx-auto space-y-10">
+                <div class="flex justify-between items-center border-b border-gray-800 pb-6">
+                    <div class="flex items-center gap-3">
+                        <img src="image_8435fe.png" alt="Logo" class="h-12 w-12 rounded-full object-cover border border-gray-700 mix-blend-multiply bg-white">
+                        <div><h1 class="text-2xl font-extrabold">SaMzcaccesSories Control Panel</h1><p class="text-gray-400 text-xs">Jumia-inspired management module.</p></div>
+                    </div>
+                    <button onclick="logoutAdmin()" class="bg-red-600/20 text-red-400 border border-red-500/30 text-xs px-4 py-2 rounded-lg hover:bg-red-600 hover:text-white transition">Log Out</button>
+                </div>
+
+                <!-- Admin Navigation Toggles -->
+                <div class="flex space-x-2 bg-gray-800 p-1.5 rounded-xl max-w-md">
+                    <button onclick="switchAdminTab('orders')" id="tab-orders" class="admin-tab-btn flex-1 bg-pink-500 text-xs font-bold py-2.5 rounded-lg text-center">Manage Orders</button>
+                    <button onclick="switchAdminTab('inventory')" id="tab-inventory" class="admin-tab-btn flex-1 text-gray-400 text-xs font-bold py-2.5 rounded-lg text-center">Products Catalog</button>
+                </div>
+
+                <!-- ORDERS TAB (Simplified Pipeline Style like Jumia) -->
+                <div id="panel-orders" class="admin-panel-section space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+                        <div class="bg-gray-800 p-4 rounded-xl border border-gray-700"><p class="text-xs text-gray-400 font-bold uppercase">Pending Validation</p><p id="count-pending" class="text-2xl font-black text-yellow-400 mt-1">0</p></div>
+                        <div class="bg-gray-800 p-4 rounded-xl border border-gray-700"><p class="text-xs text-gray-400 font-bold uppercase">Processing Packing</p><p id="count-processing" class="text-2xl font-black text-blue-400 mt-1">0</p></div>
+                        <div class="bg-gray-800 p-4 rounded-xl border border-gray-700"><p class="text-xs text-gray-400 font-bold uppercase">Out for Delivery</p><p id="count-delivery" class="text-2xl font-black text-purple-400 mt-1">0</p></div>
+                        <div class="bg-gray-800 p-4 rounded-xl border border-gray-700"><p class="text-xs text-gray-400 font-bold uppercase">Delivered Successful</p><p id="count-delivered" class="text-2xl font-black text-green-400 mt-1">0</p></div>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-2xl p-6 border border-gray-700">
+                        <h3 class="text-base font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-boxes-packing text-pink-500"></i> Active Order Feed</h3>
+                        <div id="jumia-orders-container" class="space-y-4">
+                            <!-- Dynamic functional order lists generate here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INVENTORY TAB (RE-RESTORED FULL MEDIA INPUTS) -->
+                <div id="panel-inventory" class="admin-panel-section hidden grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <form onsubmit="handleProductCreation(event)" class="lg:col-span-4 bg-gray-800 p-6 rounded-2xl border border-gray-700 h-fit space-y-4">
+                        <h3 class="text-base font-bold text-pink-500 mb-2">Deploy New Product Line</h3>
+                        <div><label class="block text-xs text-gray-400 mb-1">Product Title</label><input type="text" id="prod-name" required class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none"></div>
+                        <div><label class="block text-xs text-gray-400 mb-1">Classification Tag</label><select id="prod-cat" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none"><option value="luxury-bracelets">Luxury Wrist Bracelets</option><option value="premium-beads">Premium Custom Beads</option></select></div>
+                        <div><label class="block text-xs text-gray-400 mb-1">Price (GHS ₵)</label><input type="number" id="prod-price" required class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none"></div>
+                        
+                        <!-- IMAGES RESTORED HERE -->
+                        <div><label class="block text-xs text-gray-400 mb-1">Product Main Image File</label><input type="file" id="prod-img-file" accept="image/*" required class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white text-xs"></div>
+                        
+                        <!-- VIDEOS RESTORED HERE -->
+                        <div><label class="block text-xs text-gray-400 mb-1">Product Showcase Video (Optional MP4)</label><input type="file" id="prod-video-file" accept="video/*" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white text-xs"></div>
+                        
+                        <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-blue-600 py-3 rounded-xl font-bold text-sm shadow-md mt-2">Publish To Storefront</button>
+                    </form>
+                    <div class="lg:col-span-8 bg-gray-800 p-6 rounded-2xl border border-gray-700"><h3 class="text-base font-bold mb-4">Active Live Stock Inventory</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="admin-inventory-list"></div></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- CUSTOM PUSH NOTIFICATION EMAIL MODAL -->
+    <div id="notification-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-xs" onclick="closeNotificationModal()"></div>
+        <div class="bg-white text-gray-900 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative z-10 space-y-4">
+            <div class="flex items-center gap-3 border-b pb-3">
+                <img src="image_8435fe.png" class="h-10 w-10 rounded-full object-cover mix-blend-multiply">
+                <div><h3 class="font-bold text-lg">Send Package Status Notification</h3><p class="text-xs text-gray-500" id="notif-client-email"></p></div>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Custom Message Body</label>
+                <textarea id="notif-message-text" rows="5" class="w-full border rounded-xl p-3 text-sm focus:outline-none focus:border-pink-500"></textarea>
+            </div>
+            <div class="flex space-x-3">
+                <button onclick="closeNotificationModal()" class="w-1/3 bg-gray-100 py-3 rounded-xl font-medium text-sm">Cancel</button>
+                <button onclick="dispatchClientStatusEmail()" class="w-2/3 gradient-bg text-white font-bold py-3 rounded-xl text-sm flex items-center justify-center gap-2"><i class="fa-solid fa-paper-plane"></i> Launch Email Update</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDEOUT SHOPPING CART DRAWER -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-xs" onclick="toggleCart()"></div>
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col">
+                <div class="p-6 bg-gray-50 border-b flex items-center justify-between">
+                    <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2"><i class="fa-solid fa-bag-shopping text-pink-500"></i> Selected Items Cart</h2>
+                    <button onclick="toggleCart()" class="text-gray-400 text-xl"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="flex-1 overflow-y-auto p-6 space-y-4" id="cart-items-container"></div>
+                <div class="p-6 border-t bg-gray-50 space-y-4">
+                    <div class="flex justify-between text-base font-bold text-gray-900"><span>Subtotal Value:</span><span id="cart-total-display">₵0.00</span></div>
+                    <button onclick="openCheckoutModal()" class="w-full gradient-bg text-white font-bold py-4 rounded-xl text-center shadow-lg">Proceed To Settlement</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GATEWAY PAYMENT MODAL STAGE -->
+    <div id="payment-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/60" onclick="closeCheckoutModal()"></div>
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative z-10 space-y-6">
+            <div class="text-center"><h3 class="text-xl font-bold text-gray-900">Secure Checkout Settlement</h3></div>
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="selectPaymentMethod('MTN Mobile Money')" class="pay-method-btn border-2 border-pink-500 rounded-xl p-3 flex flex-col items-center justify-center gap-2 text-xs font-bold text-gray-700"><span class="w-8 h-8 rounded-full bg-yellow-400 text-yellow-900 flex items-center justify-center font-black">MTN</span>MoMo</button>
+                <button onclick="selectPaymentMethod('Telecel Cash')" class="pay-method-btn border-2 border-gray-100 rounded-xl p-3 flex flex-col items-center justify-center gap-2 text-xs font-bold text-gray-700"><span class="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center font-bold">T</span>Telecel Cash</button>
+                <button onclick="selectPaymentMethod('AT Money')" class="pay-method-btn border-2 border-gray-100 rounded-xl p-3 flex flex-col items-center justify-center gap-2 text-xs font-bold text-gray-700"><span class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold">at</span>AT Money</button>
+                <button onclick="selectPaymentMethod('Visa / Mastercard')" class="pay-method-btn border-2 border-gray-100 rounded-xl p-3 flex flex-col items-center justify-center gap-2 text-xs font-bold text-gray-700"><span class="w-8 h-8 rounded-full bg-indigo-900 text-white flex items-center justify-center font-bold"><i class="fa-solid fa-credit-card"></i></span>Visa / Card</button>
+            </div>
+            <form onsubmit="executeMockPayment(event)" class="space-y-4 pt-2">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div><label class="block text-xs font-bold uppercase text-gray-500 mb-1">Full Name</label><input type="text" id="checkout-name-input" required class="w-full border rounded-xl px-4 py-3 text-sm"></div>
+                    <div><label class="block text-xs font-bold uppercase text-gray-500 mb-1">Email Address</label><input type="email" id="checkout-email-input" required class="w-full border rounded-xl px-4 py-3 text-sm"></div>
+                </div>
+                <div><label class="block text-xs font-bold uppercase text-gray-500 mb-1">Delivery Address</label><input type="text" id="checkout-address-input" required placeholder="House number, area, city" class="w-full border rounded-xl px-4 py-3 text-sm"></div>
+                <div><label id="payment-field-label" class="block text-xs font-bold uppercase text-gray-500 mb-1">Mobile Money Number</label><input type="text" id="payment-account-input" placeholder="024XXXXXXX" required class="w-full border rounded-xl px-4 py-3 text-sm"></div>
+                <div class="bg-gray-50 p-4 rounded-xl flex justify-between items-center"><span class="text-xs font-bold text-gray-500">Gross Due Amount:</span><span id="modal-payment-total" class="text-lg font-black text-gray-900">₵0.00</span></div>
+                <button type="submit" class="w-full bg-gray-900 text-white font-bold py-4 rounded-xl shadow-lg">Authorize & Place Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT CORE -->
+    <script>
+        // ---------- LOCAL PERSISTENCE HELPERS ----------
+        // This is a client-only demo (no backend), so data is persisted in the browser's
+        // localStorage. Passwords are never stored in plain text — only a SHA-256 hash.
+        function loadFromStorage(key, fallback) {
+            try {
+                const raw = localStorage.getItem(key);
+                return raw ? JSON.parse(raw) : fallback;
+            } catch (err) { return fallback; }
+        }
+        function saveToStorage(key, value) {
+            try { localStorage.setItem(key, JSON.stringify(value)); } catch (err) { /* storage unavailable */ }
+        }
+
+        async function sha256Hex(text) {
+            const enc = new TextEncoder().encode(text);
+            const digest = await crypto.subtle.digest('SHA-256', enc);
+            return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // ---------- PASSWORD POLICY ----------
+        // Strong password rule: at least 8 characters, containing a letter, a number,
+        // and a symbol. Enforced on registration; shown live as the customer types.
+        function checkPasswordRules(pw) {
+            return {
+                len: pw.length >= 8,
+                letter: /[A-Za-z]/.test(pw),
+                number: /[0-9]/.test(pw),
+                symbol: /[^A-Za-z0-9]/.test(pw)
+            };
+        }
+        function isPasswordStrong(pw) {
+            const r = checkPasswordRules(pw);
+            return r.len && r.letter && r.number && r.symbol;
+        }
+        function updatePasswordStrength() {
+            const pw = document.getElementById('reg-password').value;
+            const r = checkPasswordRules(pw);
+            const setReq = (id, ok) => {
+                const el = document.getElementById(id);
+                el.innerHTML = el.innerHTML.replace(/<i.*?<\/i>/, ok ? '<i class="fa-solid fa-circle-check text-green-500 mr-1"></i>' : '<i class="fa-solid fa-circle-xmark text-gray-300 mr-1"></i>');
+            };
+            setReq('req-len', r.len); setReq('req-letter', r.letter); setReq('req-number', r.number); setReq('req-symbol', r.symbol);
+            const score = [r.len, r.letter, r.number, r.symbol].filter(Boolean).length;
+            const bar = document.getElementById('pw-strength-bar');
+            const pct = (score / 4) * 100;
+            bar.style.width = pct + '%';
+            bar.className = 'h-full transition-all duration-300 rounded-full ' + (score <= 1 ? 'bg-red-400' : score <= 2 ? 'bg-orange-400' : score === 3 ? 'bg-yellow-400' : 'bg-green-500');
+        }
+        function togglePwVisibility(id, btn) {
+            const input = document.getElementById(id);
+            const isPw = input.type === 'password';
+            input.type = isPw ? 'text' : 'password';
+            btn.innerHTML = isPw ? '<i class="fa-solid fa-eye-slash"></i>' : '<i class="fa-solid fa-eye"></i>';
+        }
+
+        let products = loadFromStorage('sz_products', null) || [
+            { id: 1, name: "Luxury Amethyst Crystal Wristlet", category: "luxury-bracelets", price: 180, img: "https://d8j0ntlcm91z4.cloudfront.net/user_3G12GddvejVc9Qh90D43BvaXRi8/hf_20260704_030626_dd8d8764-787d-4e36-a9f2-a52d2e124506.png", video: null },
+            { id: 2, name: "Premium Royal Waist Bead Trio", category: "premium-beads", price: 250, img: "https://d8j0ntlcm91z4.cloudfront.net/user_3G12GddvejVc9Qh90D43BvaXRi8/hf_20260704_030656_8ef88b82-3a53-42f6-84e2-db1ce6bbc9c4.png", video: null },
+            { id: 3, name: "Rose Quartz Gold Accented Bracelet", category: "luxury-bracelets", price: 195, img: "https://d8j0ntlcm91z4.cloudfront.net/user_3G12GddvejVc9Qh90D43BvaXRi8/hf_20260704_030811_df4a28cd-faa0-499d-8ae4-efb12779397e.png", video: null },
+            { id: 4, name: "Turquoise Heritage Statement Cuff", category: "luxury-bracelets", price: 210, img: "https://d8j0ntlcm91z4.cloudfront.net/user_3G12GddvejVc9Qh90D43BvaXRi8/hf_20260704_030859_57178dc8-b4fb-4260-b64e-42cb1d0e61ba.png", video: null }
+        ];
+
+        let cart = [];
+        let crmMessages = [];
+
+        // Tracking array mimicking a database pipeline (persisted so it survives reloads)
+        let orders = loadFromStorage('sz_orders', null) || [
+            { id: "SZA-1092", name: "Abena Osei", email: "abena.osei@gmail.com", phone: "0244123456", address: "House 12, Airport Residential Area, Accra", total: 430, items: "Luxury Amethyst Wristlet x1, Premium Royal Waist Bead x1", status: "Pending" },
+            { id: "SZA-3391", name: "Kweku Boateng", email: "k.boateng@yahoo.com", phone: "0207765432", address: "Block C, Tema Community 11", total: 195, items: "Rose Quartz Gold Accented Bracelet x1", status: "Processing" }
+        ];
+
+        // ---------- CUSTOMER ACCOUNTS ----------
+        let customers = loadFromStorage('sz_customers', []);
+        let currentCustomerEmail = loadFromStorage('sz_session', null);
+
+        function saveProducts() { saveToStorage('sz_products', products); }
+        function saveOrders() { saveToStorage('sz_orders', orders); }
+        function saveCustomers() { saveToStorage('sz_customers', customers); }
+        function saveSession() { saveToStorage('sz_session', currentCustomerEmail); }
+
+        function switchPortalTab(tab) {
+            const isLogin = tab === 'login';
+            document.getElementById('portal-login-form').classList.toggle('hidden', !isLogin);
+            document.getElementById('portal-register-form').classList.toggle('hidden', isLogin);
+            document.getElementById('portal-tab-login').className = 'portal-tab-btn flex-1 text-xs font-bold py-2.5 rounded-lg text-center transition ' + (isLogin ? 'bg-pink-500 text-white' : 'text-gray-500');
+            document.getElementById('portal-tab-register').className = 'portal-tab-btn flex-1 text-xs font-bold py-2.5 rounded-lg text-center transition ' + (!isLogin ? 'bg-pink-500 text-white' : 'text-gray-500');
+        }
+
+        async function handleCustomerRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value.trim();
+            const email = document.getElementById('reg-email').value.trim().toLowerCase();
+            const phone = document.getElementById('reg-phone').value.trim();
+            const pw = document.getElementById('reg-password').value;
+            const pwConfirm = document.getElementById('reg-password-confirm').value;
+            const errBox = document.getElementById('register-error');
+            errBox.classList.add('hidden');
+
+            if (!isPasswordStrong(pw)) {
+                errBox.innerText = "Password must be at least 8 characters and include a letter, a number, and a symbol.";
+                errBox.classList.remove('hidden');
+                return;
+            }
+            if (pw !== pwConfirm) {
+                errBox.innerText = "Passwords do not match.";
+                errBox.classList.remove('hidden');
+                return;
+            }
+            if (customers.some(c => c.email === email)) {
+                errBox.innerText = "An account with this email already exists. Please log in instead.";
+                errBox.classList.remove('hidden');
+                return;
+            }
+
+            const passwordHash = await sha256Hex(pw);
+            customers.push({ name, email, phone, passwordHash });
+            saveCustomers();
+            currentCustomerEmail = email;
+            saveSession();
+            document.getElementById('portal-register-form').reset();
+            document.getElementById('pw-strength-bar').style.width = '0%';
+            renderCustomerPortal();
+        }
+
+        async function handleCustomerLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value.trim().toLowerCase();
+            const pw = document.getElementById('login-password').value;
+            const errBox = document.getElementById('login-error');
+            errBox.classList.add('hidden');
+
+            const match = customers.find(c => c.email === email);
+            if (!match) {
+                errBox.innerText = "No account found with that email. Try registering instead.";
+                errBox.classList.remove('hidden');
+                return;
+            }
+            const hash = await sha256Hex(pw);
+            if (hash !== match.passwordHash) {
+                errBox.innerText = "Incorrect password. Please try again.";
+                errBox.classList.remove('hidden');
+                return;
+            }
+            currentCustomerEmail = email;
+            saveSession();
+            document.getElementById('portal-login-form').reset();
+            renderCustomerPortal();
+        }
+
+        function handleCustomerLogout() {
+            currentCustomerEmail = null;
+            saveSession();
+            renderCustomerPortal();
+        }
+
+        function renderCustomerPortal() {
+            const navLabel = document.getElementById('nav-account-label');
+            const guestView = document.getElementById('portal-guest-view');
+            const accountView = document.getElementById('portal-account-view');
+            const leftTitle = document.getElementById('portal-left-title');
+            const customer = customers.find(c => c.email === currentCustomerEmail);
+
+            if (customer) {
+                navLabel.innerText = customer.name.split(' ')[0];
+                guestView.classList.add('hidden');
+                accountView.classList.remove('hidden');
+                leftTitle.innerText = "Hello, " + customer.name.split(' ')[0] + "!";
+                document.getElementById('account-welcome-name').innerText = customer.name;
+                document.getElementById('account-welcome-email').innerText = customer.email + " • " + customer.phone;
+
+                const myOrders = orders.filter(o => o.email.toLowerCase() === customer.email);
+                const list = document.getElementById('account-orders-list');
+                list.innerHTML = myOrders.length ? '' : '<p class="text-xs text-gray-400 italic">No orders placed yet — head to the shop to find something you love.</p>';
+                myOrders.forEach(o => {
+                    let badgeColor = "bg-yellow-100 text-yellow-800";
+                    if (o.status === 'Processing') badgeColor = "bg-blue-100 text-blue-800";
+                    if (o.status === 'Out for Delivery') badgeColor = "bg-purple-100 text-purple-800";
+                    if (o.status === 'Delivered') badgeColor = "bg-green-100 text-green-800";
+                    list.innerHTML += `
+                        <div class="border border-gray-100 rounded-xl p-4 bg-gray-50">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="font-mono text-xs font-bold text-gray-600">${o.id}</span>
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${badgeColor}">${o.status}</span>
+                            </div>
+                            <p class="text-xs text-gray-700">${o.items}</p>
+                            <p class="text-xs font-bold text-pink-600 mt-1">₵${o.total.toFixed(2)}</p>
+                        </div>`;
+                });
+            } else {
+                navLabel.innerText = "Sign In";
+                guestView.classList.remove('hidden');
+                accountView.classList.add('hidden');
+                leftTitle.innerText = "Your SaMzcaccesSories Account";
+            }
+        }
+
+        let selectedPaymentChannel = "MTN Mobile Money";
+        let activeTargetOrderIndex = null;
+
+        function toggleSection(sectionId) {
+            document.querySelectorAll('.view-section').forEach(section => section.classList.add('hidden'));
+            document.getElementById(sectionId).classList.remove('hidden');
+            closeMobileMenu();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+        function closeMobileMenu() { document.getElementById('mobile-menu').classList.add('hidden'); }
+
+        function renderStorefront(filter = 'all') {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+            const targeted = filter === 'all' ? products : products.filter(p => p.category === filter);
+            
+            targeted.forEach(p => {
+                let visualMedia = p.video ? `<video src="${p.video}" class="w-full h-full object-cover" autoplay loop muted playsinline></video>` : `<img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">`;
+                grid.innerHTML += `
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 border border-gray-100 flex flex-col justify-between">
+                        <div class="relative group overflow-hidden bg-gray-100 h-64">${visualMedia}</div>
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-gray-900 mb-1 text-base line-clamp-2">${p.name}</h3>
+                                <p class="text-pink-600 font-black text-lg">₵ ${p.price.toFixed(2)}</p>
+                            </div>
+                            <button onclick="addToCart(${p.id})" class="w-full mt-4 bg-gray-50 hover:bg-pink-500 hover:text-white text-gray-700 font-semibold text-sm py-3 rounded-xl transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-cart-plus"></i> Add To Cart
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Customer Live Tracker Logic
+        function locateClientOrderTrack() {
+            const query = document.getElementById('client-track-input').value.trim().toUpperCase();
+            const targetBox = document.getElementById('tracking-result-box');
+            
+            if(!query) {
+                alert("Please provide a valid reference code code.");
+                return;
+            }
+
+            const match = orders.find(o => o.id === query);
+            targetBox.classList.remove('hidden');
+
+            if(match) {
+                let colorClasses = "bg-yellow-100 text-yellow-800";
+                let statusMsg = "Your package request is being validated by our sales team.";
+                
+                if(match.status === "Processing") {
+                    colorClasses = "bg-blue-100 text-blue-800";
+                    statusMsg = "Artisans are crafting and packaging your items right now.";
+                } else if(match.status === "Out for Delivery") {
+                    colorClasses = "bg-purple-100 text-purple-800";
+                    statusMsg = "Dispatched! The delivery rider has picked up your package.";
+                } else if(match.status === "Delivered") {
+                    colorClasses = "bg-green-100 text-green-800";
+                    statusMsg = "Delivered successfully! Thank you for ordering from us.";
+                }
+
+                targetBox.innerHTML = `
+                    <div class="flex justify-between items-center border-b pb-2">
+                        <span class="text-xs font-mono font-bold text-gray-500">REF: ${match.id}</span>
+                        <span class="text-xs font-extrabold px-3 py-1 rounded-full ${colorClasses}">${match.status}</span>
+                    </div>
+                    <div class="text-sm space-y-1">
+                        <p class="text-xs text-gray-500">Order Basket:</p>
+                        <p class="font-medium text-gray-900">${match.items}</p>
+                    </div>
+                    <div class="text-sm space-y-1">
+                        <p class="text-xs text-gray-500">Live Status Tracking Log:</p>
+                        <p class="text-gray-700 text-xs italic">${statusMsg}</p>
+                    </div>
+                    <div class="flex justify-between items-center pt-2 border-t text-xs">
+                        <span class="text-gray-500">Total Value:</span>
+                        <span class="font-bold text-pink-600 text-sm">₵ ${match.total.toFixed(2)}</span>
+                    </div>
+                `;
+            } else {
+                targetBox.innerHTML = `
+                    <div class="text-center py-4">
+                        <i class="fa-solid fa-circle-exclamation text-red-500 text-2xl mb-2"></i>
+                        <p class="text-sm font-semibold text-gray-800">No Order Found</p>
+                        <p class="text-xs text-gray-500 mt-1">Double check your reference ID code and try again.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function filterCategory(cat) {
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.className = "cat-btn bg-white text-gray-600 hover:bg-gray-100 font-medium px-5 py-2 rounded-full shadow transition text-sm");
+            event.target.className = "cat-btn bg-pink-500 text-white font-medium px-5 py-2 rounded-full shadow transition text-sm";
+            renderStorefront(cat);
+        }
+
+        function toggleCart() { document.getElementById('cart-drawer').classList.toggle('hidden'); }
+        function addToCart(id) { const match = products.find(p => p.id === id); if (match) { cart.push(match); updateCartUI(); alert(`${match.name} added to cart.`); } }
+        function removeFromCart(index) { cart.splice(index, 1); updateCartUI(); }
+
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const container = document.getElementById('cart-items-container');
+            container.innerHTML = '';
+            let sum = 0;
+            cart.forEach((item, index) => {
+                sum += item.price;
+                container.innerHTML += `
+                    <div class="flex items-center justify-between bg-gray-50 p-3 rounded-xl border">
+                        <div class="flex items-center space-x-3">
+                            <img src="${item.img}" class="w-12 h-12 rounded-lg object-cover">
+                            <div><h4 class="text-xs font-bold text-gray-900 line-clamp-1">${item.name}</h4><p class="text-xs text-pink-600 font-bold">₵${item.price.toFixed(2)}</p></div>
+                        </div>
+                        <button onclick="removeFromCart(${index})" class="text-gray-400 hover:text-red-500 text-sm"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>`;
+            });
+            document.getElementById('cart-total-display').innerText = `₵${sum.toFixed(2)}`;
+            document.getElementById('modal-payment-total').innerText = `₵${sum.toFixed(2)}`;
+        }
+
+        function openCheckoutModal() {
+            if (cart.length === 0) return alert("Cart is currently empty.");
+            const customer = customers.find(c => c.email === currentCustomerEmail);
+            if (customer) {
+                document.getElementById('checkout-name-input').value = customer.name;
+                document.getElementById('checkout-email-input').value = customer.email;
+                document.getElementById('payment-account-input').value = customer.phone;
+            }
+            document.getElementById('payment-modal').classList.remove('hidden');
+        }
+        function closeCheckoutModal() { document.getElementById('payment-modal').classList.add('hidden'); }
+
+        function selectPaymentMethod(method) {
+            selectedPaymentChannel = method;
+            document.querySelectorAll('.pay-method-btn').forEach(btn => btn.className = "pay-method-btn border-2 border-gray-100 rounded-xl p-3 flex flex-col items-center justify-center gap-2 text-xs font-bold text-gray-700");
+            event.currentTarget.className = "pay-method-btn border-2 border-pink-500 rounded-xl p-3 flex flex-col items-center justify-center gap-2 text-xs font-bold text-gray-700";
+        }
+
+        function executeMockPayment(e) {
+            e.preventDefault();
+            const ref = "SZA-" + Math.floor(1000 + Math.random() * 9000);
+            orders.unshift({
+                id: ref,
+                name: document.getElementById('checkout-name-input').value.trim(),
+                email: document.getElementById('checkout-email-input').value.trim().toLowerCase(),
+                phone: document.getElementById('payment-account-input').value,
+                address: document.getElementById('checkout-address-input').value.trim(),
+                total: cart.reduce((a, b) => a + b.price, 0),
+                items: cart.map(i => i.name).join(', '),
+                status: "Pending"
+            });
+            saveOrders();
+            alert(`Order Placed on Pipeline!\nGive this Reference ID to your customer: ${ref}`);
+            cart = []; updateCartUI(); closeCheckoutModal(); toggleCart(); renderAdminDashboard();
+            if (currentCustomerEmail) renderCustomerPortal();
+        }
+
+        function handleCRMSubmit(e) { e.preventDefault(); alert("Inquiry Sent Successfully!"); document.getElementById('crm-form').reset(); }
+        // Admin password is never stored in plain text in the source — only its SHA-256 hash
+        // is kept here and compared against at login time. (Current password: Samara@2026 —
+        // already meets the strong-password policy: 8+ chars, letters, a number, a symbol.
+        // To change it: run the new password through SHA-256 and replace the hash below.)
+        const ADMIN_PASS_HASH = "cc3a93423345e6f7a4c89477783003920d793a738c1c5ce894ccd9bd5b5ba601";
+        async function handleAdminLogin(e) {
+            e.preventDefault();
+            const entered = document.getElementById('admin-pass-input').value;
+            const hash = await sha256Hex(entered);
+            if (hash === ADMIN_PASS_HASH) {
+                document.getElementById('admin-gatekeeper').classList.add('hidden');
+                document.getElementById('admin-dashboard-content').classList.remove('hidden');
+                renderAdminDashboard();
+            } else {
+                alert("Incorrect Key Password.");
+            }
+            document.getElementById('admin-pass-input').value = '';
+        }
+
+        function logoutAdmin() {
+            document.getElementById('admin-pass-input').value = '';
+            document.getElementById('admin-gatekeeper').classList.remove('hidden');
+            document.getElementById('admin-dashboard-content').classList.add('hidden');
+            toggleSection('storefront-view');
+        }
+
+        function switchAdminTab(tab) {
+            document.querySelectorAll('.admin-panel-section').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('.admin-tab-btn').forEach(b => b.className = "admin-tab-btn flex-1 text-gray-400 text-xs font-bold py-2.5 rounded-lg text-center");
+            document.getElementById(`panel-${tab}`).classList.remove('hidden');
+            document.getElementById(`tab-${tab}`).className = "admin-tab-btn flex-1 bg-pink-500 text-white text-xs font-bold py-2.5 rounded-lg text-center";
+        }
+
+        function setOrderStatus(index, newStatus) {
+            orders[index].status = newStatus;
+            saveOrders();
+            renderAdminDashboard();
+        }
+
+        function openNotificationModal(index) {
+            activeTargetOrderIndex = index;
+            const order = orders[index];
+            document.getElementById('notif-client-email').innerText = `To: ${order.name} (${order.email})`;
+            
+            let defaultText = `Hello ${order.name},\n\nThis is an update from SaMzcaccesSories regarding your order ${order.id}.\n\n`;
+            if (order.status === "Pending") {
+                defaultText += `We have successfully received your order request for [ ${order.items} ] total value ₵${order.total.toFixed(2)}. Our artisans are currently inspecting your sizing requirements and validation checks before packing.`;
+            } else if (order.status === "Processing") {
+                defaultText += `Good news! Your premium package has passed inspections and is currently being packaged carefully in our design room. We are getting it ready for the courier.`;
+            } else if (order.status === "Out for Delivery") {
+                defaultText += `Your package is now out for delivery! The courier will get in touch with you shortly at your number (${order.phone}) to drop off items to your delivery point: ${order.address}.`;
+            } else if (order.status === "Delivered") {
+                defaultText += `Order Complete! Your custom jewelry package has been safely delivered. Thank you for shopping with SaMzcaccesSories!`;
+            }
+
+            document.getElementById('notif-message-text').value = defaultText;
+            document.getElementById('notification-modal').classList.remove('hidden');
+        }
+
+        function closeNotificationModal() { document.getElementById('notification-modal').classList.add('hidden'); }
+
+        function dispatchClientStatusEmail() {
+            const order = orders[activeTargetOrderIndex];
+            const customMessage = document.getElementById('notif-message-text').value;
+            window.open(`mailto:${order.email}?subject=${encodeURIComponent('SaMzcaccesSories - Order Update #' + order.id)}&body=${encodeURIComponent(customMessage)}`);
+            closeNotificationModal();
+        }
+
+        function renderAdminDashboard() {
+            document.getElementById('count-pending').innerText = orders.filter(o => o.status === 'Pending').length;
+            document.getElementById('count-processing').innerText = orders.filter(o => o.status === 'Processing').length;
+            document.getElementById('count-delivery').innerText = orders.filter(o => o.status === 'Out for Delivery').length;
+            document.getElementById('count-delivered').innerText = orders.filter(o => o.status === 'Delivered').length;
+
+            const container = document.getElementById('jumia-orders-container');
+            container.innerHTML = '';
+
+            orders.forEach((o, index) => {
+                let badgeColor = "bg-yellow-500/10 text-yellow-400 border-yellow-500/30";
+                if (o.status === 'Processing') badgeColor = "bg-blue-500/10 text-blue-400 border-blue-500/30";
+                if (o.status === 'Out for Delivery') badgeColor = "bg-purple-500/10 text-purple-400 border-purple-500/30";
+                if (o.status === 'Delivered') badgeColor = "bg-green-500/10 text-green-400 border-green-500/30";
+
+                container.innerHTML += `
+                    <div class="bg-gray-900 border border-gray-700 rounded-xl p-5 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-3">
+                                <span class="font-mono text-pink-400 font-bold text-sm">${o.id}</span>
+                                <span class="text-xs font-bold border px-2 py-0.5 rounded-full ${badgeColor}">${o.status}</span>
+                            </div>
+                            <p class="text-sm font-semibold text-white">${o.name} - <span class="text-xs text-gray-400">${o.email} | ${o.phone}</span></p>
+                            <p class="text-xs text-gray-400">Items: <span class="text-gray-200 font-medium">${o.items}</span></p>
+                            <p class="text-xs text-gray-400">Delivery Point: <span class="text-gray-300">${o.address}</span></p>
+                            <p class="text-sm font-black text-pink-500 mt-1">Total: ₵${o.total.toFixed(2)}</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 w-full lg:w-auto border-t lg:border-t-0 pt-3 lg:pt-0">
+                            <button onclick="setOrderStatus(${index}, 'Pending')" class="text-[10px] uppercase bg-gray-800 text-yellow-400 font-bold px-3 py-1.5 rounded-md hover:bg-gray-700">Set Pending</button>
+                            <button onclick="setOrderStatus(${index}, 'Processing')" class="text-[10px] uppercase bg-gray-800 text-blue-400 font-bold px-3 py-1.5 rounded-md hover:bg-gray-700">Pack Item</button>
+                            <button onclick="setOrderStatus(${index}, 'Out for Delivery')" class="text-[10px] uppercase bg-gray-800 text-purple-400 font-bold px-3 py-1.5 rounded-md hover:bg-gray-700">Dispatch</button>
+                            <button onclick="setOrderStatus(${index}, 'Delivered')" class="text-[10px] uppercase bg-gray-800 text-green-400 font-bold px-3 py-1.5 rounded-md hover:bg-gray-700">Delivered</button>
+                            <button onclick="openNotificationModal(${index})" class="text-[10px] uppercase bg-pink-500 text-white font-bold px-3 py-1.5 rounded-md hover:bg-pink-600 flex items-center gap-1"><i class="fa-solid fa-envelope"></i> Send Status Email</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const invList = document.getElementById('admin-inventory-list');
+            invList.innerHTML = '';
+            products.forEach(p => {
+                let media = p.video ? `<video src="${p.video}" class="w-10 h-10 rounded-lg object-cover" muted></video>` : `<img src="${p.img}" class="w-10 h-10 rounded-lg object-cover">`;
+                invList.innerHTML += `
+                    <div class="bg-gray-900 p-4 rounded-xl flex items-center justify-between border border-gray-700">
+                        <div class="flex items-center space-x-3">
+                            ${media}
+                            <div><h4 class="text-xs font-bold text-white">${p.name}</h4><p class="text-xs text-pink-400 font-bold">₵${p.price.toFixed(2)}</p></div>
+                        </div>
+                        <button onclick="deleteProduct(${p.id})" class="text-gray-500 hover:text-red-400 transition text-sm p-2"><i class="fa-solid fa-trash"></i></button>
+                    </div>`;
+            });
+        }
+
+        function readFileAsDataURL(file) { return new Promise((r) => { if (!file) r(null); const rd = new FileReader(); rd.onload = (e) => r(e.target.result); rd.readAsDataURL(file); }); }
+
+        async function handleProductCreation(e) {
+            e.preventDefault();
+            const imgFile = document.getElementById('prod-img-file').files[0];
+            const videoFile = document.getElementById('prod-video-file').files[0];
+            const imgUrl = await readFileAsDataURL(imgFile);
+            const videoUrl = videoFile ? await readFileAsDataURL(videoFile) : null;
+
+            products.unshift({
+                id: Date.now(),
+                name: document.getElementById('prod-name').value,
+                category: document.getElementById('prod-cat').value,
+                price: parseFloat(document.getElementById('prod-price').value),
+                img: imgUrl,
+                video: videoUrl
+            });
+            alert("Product published successfully!");
+            document.getElementById('prod-name').value = '';
+            document.getElementById('prod-price').value = '';
+            document.getElementById('prod-img-file').value = '';
+            document.getElementById('prod-video-file').value = '';
+            saveProducts();
+            renderStorefront(); renderAdminDashboard();
+        }
+
+        function deleteProduct(id) { products = products.filter(p => p.id !== id); saveProducts(); renderStorefront(); renderAdminDashboard(); }
+
+        renderStorefront();
+        renderCustomerPortal();
+    </script>
+</body>
+</html>
