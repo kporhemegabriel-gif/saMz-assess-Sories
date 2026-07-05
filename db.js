@@ -3,13 +3,10 @@ import { v4 as uuid } from 'uuid';
 
 const MONGO_URI = 'mongodb://migration:migration@84.247.188.211:14002/Mydb?authSource=admin';
 
-// Connect to MongoDB
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(() => console.log('✅ MongoDB connected successfully'))
-  .catch(err => console.error('❌ MongoDB connection error:', err.message));
+// Connect with exact pattern for Docker MongoDB
+mongoose.connect(MONGO_URI)
+  .then(() => console.log('✅ MongoDB connected'))
+  .catch(err => console.error('❌ MongoDB error:', err.message));
 
 // ===== SCHEMAS =====
 
