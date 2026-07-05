@@ -1,3 +1,5 @@
+console.log('[START] Initializing server...');
+
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
@@ -5,7 +7,7 @@ import { v4 as uuid } from 'uuid';
 import crypto from 'crypto';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { getProducts, addProduct, deleteProduct, getCustomer, addCustomer, customerExists, addOrder, getOrder, getCustomerOrders, getOrders, updateOrderStatus } from './db.js';
+import { connectDB, getProducts, addProduct, deleteProduct, getCustomer, addCustomer, customerExists, addOrder, getOrder, getCustomerOrders, getOrders, updateOrderStatus } from './db.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -22,10 +24,8 @@ function hashPassword(pw) {
   return crypto.createHash('sha256').update(pw).digest('hex');
 }
 
-console.log('[SETUP] Server initializing...');
-
 // Health check
-app.get('/health', async (req, res) => {
+app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date() });
 });
 
@@ -35,7 +35,7 @@ app.get('/api/products', async (req, res) => {
     const products = await getProducts();
     res.json(products || []);
   } catch (err) {
-    console.error('[ERROR] /api/products:', err);
+    console.error('[ERROR] GET /api/products:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -53,7 +53,7 @@ app.post('/api/products', upload.single('image'), async (req, res) => {
     }
     const product = { id, name, category, price: parseFloat(price), imageData, createdAt: Date.now(), updatedAt: Date.now() };
     const saved = await addProduct(product);
-    res.json(saved || product);
+    res.json(saved);
   } catch (err) {
     console.error('[ERROR] POST /api/products:', err);
     res.status(500).json({ error: err.message });
@@ -77,12 +77,13 @@ app.post('/api/auth/register', async (req, res) => {
     if (!name || !email || !password) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
-    if (await customerExists(email)) {
+    const exists = await customerExists(email);
+    if (exists) {
       return res.status(400).json({ error: 'Email already exists' });
     }
     const passwordHash = hashPassword(password);
     const customer = { email: email.toLowerCase(), name, phone, passwordHash, createdAt: Date.now() };
-    await addCustomer(customer);
+    const saved = await addCustomer(customer);
     res.json({ success: true, email: email.toLowerCase(), name });
   } catch (err) {
     console.error('[ERROR] POST /api/auth/register:', err);
@@ -176,21 +177,27 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
-console.log('[SETUP] All routes configured');
-
-app.listen(port, '0.0.0.0', () => {
-  console.log(`
+// ===== START SERVER =====
+async function start() {
+  try {
+    // Connect to MongoDB
+    await connectDB();
+    
+    app.listen(port, '0.0.0.0', () => {
+      console.log(`
 ╔════════════════════════════════════════╗
 ║  ✅ SERVER STARTED SUCCESSFULLY        ║
 ║  🛍️  SaMzcaccesSories                   ║
-║  🔌 MongoDB Connected                   ║
 ║  🌐 Listening on 0.0.0.0:${port}             ║
+║  📊 MongoDB Connected                  ║
 ║  ⏰ ${new Date().toISOString()}    ║
 ╚════════════════════════════════════════╝
-  `);
-});
+      `);
+    });
+  } catch (err) {
+    console.error('[FATAL ERROR]', err);
+    process.exit(1);
+  }
+}
 
-process.on('uncaughtException', (err) => {
-  console.error('[FATAL ERROR]', err);
-  process.exit(1);
-});
+start();
