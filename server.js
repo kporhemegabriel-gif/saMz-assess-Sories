@@ -3,7 +3,7 @@ import cors from 'cors';
 import multer from 'multer';
 import { v4 as uuid } from 'uuid';
 import crypto from 'crypto';
-import { initDatabase, getDatabase } from './db-init.js';
+import { getProducts, addProduct, deleteProduct, getCustomer, addCustomer, customerExists, addOrder, getOrder, getCustomerOrders, getOrders, updateOrderStatus } from './db.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -11,7 +11,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
@@ -19,11 +18,6 @@ app.use(express.static('public'));
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-// Initialize database
-initDatabase();
-const db = getDatabase();
-
-// Helper: hash password
 function hashPassword(pw) {
   return crypto.createHash('sha256').update(pw).digest('hex');
 }
@@ -31,9 +25,8 @@ function hashPassword(pw) {
 // ===== PRODUCTS API =====
 app.get('/api/products', (req, res) => {
   try {
-    const stmt = db.prepare('SELECT * FROM products ORDER BY createdAt DESC');
-    const rows = stmt.all();
-    res.json(rows || []);
+    const products = getProducts();
+    res.json(products || []);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -52,11 +45,9 @@ app.post('/api/products', upload.single('image'), (req, res) => {
   }
 
   try {
-    const stmt = db.prepare(
-      'INSERT INTO products (id, name, category, price, imageData, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?)'
-    );
-    stmt.run(id, name, category, parseFloat(price), imageData, Date.now(), Date.now());
-    res.json({ id, name, category, price, imageData });
+    const product = { id, name, category, price: parseFloat(price), imageData, createdAt: Date.now(), updatedAt: Date.now() };
+    addProduct(product);
+    res.json(product);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -65,8 +56,7 @@ app.post('/api/products', upload.single('image'), (req, res) => {
 app.delete('/api/products/:id', (req, res) => {
   const { id } = req.params;
   try {
-    const stmt = db.prepare('DELETE FROM products WHERE id = ?');
-    stmt.run(id);
+    deleteProduct(id);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -80,17 +70,16 @@ app.post('/api/auth/register', (req, res) => {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
+  if (customerExists(email)) {
+    return res.status(400).json({ error: 'Email already exists' });
+  }
+
   const passwordHash = hashPassword(password);
   try {
-    const stmt = db.prepare(
-      'INSERT INTO customers (email, name, phone, passwordHash, createdAt) VALUES (?, ?, ?, ?, ?)'
-    );
-    stmt.run(email.toLowerCase(), name, phone, passwordHash, Date.now());
+    const customer = { email: email.toLowerCase(), name, phone, passwordHash, createdAt: Date.now() };
+    addCustomer(customer);
     res.json({ success: true, email: email.toLowerCase(), name });
   } catch (err) {
-    if (err.message.includes('UNIQUE')) {
-      return res.status(400).json({ error: 'Email already exists' });
-    }
     res.status(500).json({ error: err.message });
   }
 });
@@ -103,14 +92,11 @@ app.post('/api/auth/login', (req, res) => {
 
   const passwordHash = hashPassword(password);
   try {
-    const stmt = db.prepare(
-      'SELECT name, email FROM customers WHERE email = ? AND passwordHash = ?'
-    );
-    const row = stmt.get(email.toLowerCase(), passwordHash);
-    if (!row) {
+    const customer = getCustomer(email);
+    if (!customer || customer.passwordHash !== passwordHash) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
-    res.json({ success: true, name: row.name, email: row.email });
+    res.json({ success: true, name: customer.name, email: customer.email });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -125,10 +111,8 @@ app.post('/api/orders', (req, res) => {
 
   const id = 'SZA-' + Math.floor(1000 + Math.random() * 9000);
   try {
-    const stmt = db.prepare(
-      'INSERT INTO orders (id, customerEmail, customerName, phone, address, items, total, status, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
-    );
-    stmt.run(id, email.toLowerCase(), name, phone, address, items, parseFloat(total), 'Pending', Date.now());
+    const order = { id, customerEmail: email.toLowerCase(), customerName: name, phone, address, items, total: parseFloat(total), status: 'Pending', createdAt: Date.now() };
+    addOrder(order);
     res.json({ id, status: 'Pending' });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -138,12 +122,9 @@ app.post('/api/orders', (req, res) => {
 app.get('/api/orders/:id', (req, res) => {
   const { id } = req.params;
   try {
-    const stmt = db.prepare('SELECT * FROM orders WHERE id = ?');
-    const row = stmt.get(id.toUpperCase());
-    if (!row) {
-      return res.status(404).json({ error: 'Order not found' });
-    }
-    res.json(row);
+    const order = getOrder(id.toUpperCase());
+    if (!order) return res.status(404).json({ error: 'Order not found' });
+    res.json(order);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -152,45 +133,35 @@ app.get('/api/orders/:id', (req, res) => {
 app.get('/api/orders/customer/:email', (req, res) => {
   const { email } = req.params;
   try {
-    const stmt = db.prepare(
-      'SELECT * FROM orders WHERE customerEmail = ? ORDER BY createdAt DESC'
-    );
-    const rows = stmt.all(email.toLowerCase());
-    res.json(rows || []);
+    const orders = getCustomerOrders(email);
+    res.json(orders || []);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Admin: get all orders
 app.get('/api/admin/orders', (req, res) => {
   try {
-    const stmt = db.prepare('SELECT * FROM orders ORDER BY createdAt DESC');
-    const rows = stmt.all();
-    res.json(rows || []);
+    const orders = getOrders();
+    res.json(orders || []);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Admin: update order status
 app.patch('/api/admin/orders/:id', (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
   if (!status) return res.status(400).json({ error: 'Missing status' });
 
   try {
-    const stmt = db.prepare(
-      'UPDATE orders SET status = ?, updatedAt = ? WHERE id = ?'
-    );
-    stmt.run(status, Date.now(), id.toUpperCase());
+    updateOrderStatus(id.toUpperCase(), status);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Serve HTML
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
