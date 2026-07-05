@@ -5,7 +5,9 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "echo 'Build complete'",
+    "dev": "node --watch server.js"
   },
   "dependencies": {
     "express": "^4.18.2",
