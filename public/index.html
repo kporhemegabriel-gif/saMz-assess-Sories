@@ -618,7 +618,7 @@
             const targeted = filter === 'all' ? products : products.filter(p => p.category === filter);
             
             targeted.forEach(p => {
-                let visualMedia = p.video ? `<video src="${p.video}" class="w-full h-full object-cover" autoplay loop muted playsinline></video>` : `<img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">`;
+                let visualMedia = p.video ? `<video src="${p.video}" class="w-full h-full object-cover" autoplay loop muted playsinline></video>` : `<img src="${p.imageData ? `data:image/png;base64,${p.imageData}` : "data:image/png;base64,"}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">`;
                 grid.innerHTML += `
                     <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 border border-gray-100 flex flex-col justify-between">
                         <div class="relative group overflow-hidden bg-gray-100 h-64">${visualMedia}</div>
@@ -870,7 +870,7 @@
             const invList = document.getElementById('admin-inventory-list');
             invList.innerHTML = '';
             products.forEach(p => {
-                let media = p.video ? `<video src="${p.video}" class="w-10 h-10 rounded-lg object-cover" muted></video>` : `<img src="${p.img}" class="w-10 h-10 rounded-lg object-cover">`;
+                let media = p.video ? `<video src="${p.video}" class="w-10 h-10 rounded-lg object-cover" muted></video>` : `<img src="${p.imageData ? `data:image/png;base64,${p.imageData}` : "data:image/png;base64,"}" class="w-10 h-10 rounded-lg object-cover">`;
                 invList.innerHTML += `
                     <div class="bg-gray-900 p-4 rounded-xl flex items-center justify-between border border-gray-700">
                         <div class="flex items-center space-x-3">
