@@ -1,10 +1,4 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dbFile = path.join(__dirname, 'data.json');
-
+// In-memory database - no file system access needed
 let data = {
   products: [
     { id: '1', name: 'Luxury Amethyst Crystal Wristlet', category: 'luxury-bracelets', price: 180, imageData: null, createdAt: Date.now() },
@@ -16,42 +10,17 @@ let data = {
   orders: []
 };
 
-// Load from file if exists
-function load() {
-  try {
-    if (fs.existsSync(dbFile)) {
-      const raw = fs.readFileSync(dbFile, 'utf8');
-      data = JSON.parse(raw);
-    } else {
-      save();
-    }
-  } catch (err) {
-    console.log('Database initialized with defaults');
-  }
-}
-
-// Save to file
-function save() {
-  try {
-    fs.writeFileSync(dbFile, JSON.stringify(data, null, 2));
-  } catch (err) {
-    console.error('Error saving database:', err);
-  }
-}
-
 export function getProducts() {
   return data.products;
 }
 
 export function addProduct(product) {
   data.products.unshift(product);
-  save();
   return product;
 }
 
 export function deleteProduct(id) {
   data.products = data.products.filter(p => p.id !== id);
-  save();
 }
 
 export function getCustomers() {
@@ -60,7 +29,6 @@ export function getCustomers() {
 
 export function addCustomer(customer) {
   data.customers.push(customer);
-  save();
   return customer;
 }
 
@@ -78,7 +46,6 @@ export function getOrders() {
 
 export function addOrder(order) {
   data.orders.push(order);
-  save();
   return order;
 }
 
@@ -91,13 +58,9 @@ export function updateOrderStatus(id, status) {
   if (order) {
     order.status = status;
     order.updatedAt = Date.now();
-    save();
   }
 }
 
 export function getCustomerOrders(email) {
   return data.orders.filter(o => o.customerEmail?.toLowerCase() === email.toLowerCase());
 }
-
-// Initialize
-load();
