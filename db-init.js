@@ -1,4 +1,4 @@
-import sqlite3 from 'sqlite3';
+import Database from 'better-sqlite3';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -9,95 +9,86 @@ let dbInstance = null;
 
 export function getDatabase() {
   if (!dbInstance) {
-    dbInstance = new sqlite3.Database(dbPath, (err) => {
-      if (err) console.error('Database connection error:', err);
-      else console.log('Database connected');
-    });
-    dbInstance.configure('busyTimeout', 5000);
-    dbInstance.run('PRAGMA foreign_keys = ON');
+    dbInstance = new Database(dbPath);
+    dbInstance.pragma('journal_mode = WAL');
+    console.log('✅ Database connected:', dbPath);
   }
   return dbInstance;
 }
 
-export async function initDatabase() {
+export function initDatabase() {
   const db = getDatabase();
-  
-  return new Promise((resolve, reject) => {
-    db.serialize(() => {
-      // Create products table
-      db.run(`
-        CREATE TABLE IF NOT EXISTS products (
-          id TEXT PRIMARY KEY,
-          name TEXT NOT NULL,
-          category TEXT NOT NULL,
-          price REAL NOT NULL,
-          imageData TEXT,
-          createdAt INTEGER,
-          updatedAt INTEGER
-        )
-      `, (err) => {
-        if (err && !err.message.includes('already exists')) console.error(err);
-      });
 
-      // Create customers table
-      db.run(`
-        CREATE TABLE IF NOT EXISTS customers (
-          email TEXT PRIMARY KEY,
-          name TEXT NOT NULL,
-          phone TEXT,
-          passwordHash TEXT NOT NULL,
-          createdAt INTEGER
-        )
-      `, (err) => {
-        if (err && !err.message.includes('already exists')) console.error(err);
-      });
+  try {
+    // Create products table
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS products (
+        id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        category TEXT NOT NULL,
+        price REAL NOT NULL,
+        imageData TEXT,
+        createdAt INTEGER,
+        updatedAt INTEGER
+      )
+    `);
 
-      // Create orders table
-      db.run(`
-        CREATE TABLE IF NOT EXISTS orders (
-          id TEXT PRIMARY KEY,
-          customerEmail TEXT,
-          customerName TEXT NOT NULL,
-          phone TEXT NOT NULL,
-          address TEXT NOT NULL,
-          items TEXT NOT NULL,
-          total REAL NOT NULL,
-          status TEXT DEFAULT 'Pending',
-          createdAt INTEGER
-        )
-      `, (err) => {
-        if (err && !err.message.includes('already exists')) console.error(err);
-      });
+    // Create customers table
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS customers (
+        email TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        phone TEXT,
+        passwordHash TEXT NOT NULL,
+        createdAt INTEGER
+      )
+    `);
 
-      // Check if products exist and insert defaults if not
-      db.get('SELECT COUNT(*) as count FROM products', (err, row) => {
-        if (err) {
-          console.error('Error checking products:', err);
-          resolve(db);
-          return;
+    // Create orders table
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS orders (
+        id TEXT PRIMARY KEY,
+        customerEmail TEXT,
+        customerName TEXT NOT NULL,
+        phone TEXT NOT NULL,
+        address TEXT NOT NULL,
+        items TEXT NOT NULL,
+        total REAL NOT NULL,
+        status TEXT DEFAULT 'Pending',
+        createdAt INTEGER
+      )
+    `);
+
+    // Check if products exist and insert defaults if not
+    const countStmt = db.prepare('SELECT COUNT(*) as count FROM products');
+    const { count } = countStmt.get();
+    
+    if (count === 0) {
+      const defaults = [
+        { id: '1', name: 'Luxury Amethyst Crystal Wristlet', category: 'luxury-bracelets', price: 180 },
+        { id: '2', name: 'Premium Royal Waist Bead Trio', category: 'premium-beads', price: 250 },
+        { id: '3', name: 'Rose Quartz Gold Accented Bracelet', category: 'luxury-bracelets', price: 195 },
+        { id: '4', name: 'Turquoise Heritage Statement Cuff', category: 'luxury-bracelets', price: 210 }
+      ];
+      
+      const insertStmt = db.prepare(
+        'INSERT INTO products (id, name, category, price, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)'
+      );
+      
+      const insertMany = db.transaction((items) => {
+        for (const p of items) {
+          insertStmt.run(p.id, p.name, p.category, p.price, Date.now(), Date.now());
         }
-        
-        if (row.count === 0) {
-          const defaults = [
-            { id: '1', name: 'Luxury Amethyst Crystal Wristlet', category: 'luxury-bracelets', price: 180 },
-            { id: '2', name: 'Premium Royal Waist Bead Trio', category: 'premium-beads', price: 250 },
-            { id: '3', name: 'Rose Quartz Gold Accented Bracelet', category: 'luxury-bracelets', price: 195 },
-            { id: '4', name: 'Turquoise Heritage Statement Cuff', category: 'luxury-bracelets', price: 210 }
-          ];
-          
-          defaults.forEach(p => {
-            db.run(
-              'INSERT INTO products (id, name, category, price, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)',
-              [p.id, p.name, p.category, p.price, Date.now(), Date.now()],
-              (err) => {
-                if (err) console.error('Error inserting default product:', err);
-              }
-            );
-          });
-        }
-        
-        resolve(db);
       });
-    });
-  });
+      
+      insertMany(defaults);
+      console.log('✅ Default products inserted');
+    }
+
+    console.log('✅ Database initialized successfully');
+    return db;
+  } catch (err) {
+    console.error('❌ Database initialization error:', err);
+    throw err;
+  }
 }
